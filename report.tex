@@ -12,6 +12,31 @@
  right=25.4mm
  }
  \setlength{\parindent}{2cm}
+\usepackage{graphicx} %package to manage images
+\graphicspath{ {./images/} }
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 \begin{document}
 % \maketitle
 \tableofcontents
@@ -26,24 +51,53 @@
 Augmented reality is a field that combines some merging technologies in computer science, including image processing, vision graphics, human-computer interaction, and virtual reality. Augmented reality uses computer-generated virtual information to mix with what users observe in the real environment. Today’s technological advances have caused many businesses to take advantage of virtual reality and augmented reality technology to attract customer attention, such as in simulation, maintenance, marketing and engineering. Many methods can be used to implement augmented reality, one of them is by utilizing homography and feature extraction to search for predefined markers and draw a model on them.
 
 \section{\uppercase{\large{Abstract}}}
-Smartphones currently support the augmented reality feature, capable of displaying virtual objects into the real-world environment at a specific location designated with a marker. This research develops an augmented reality application on a smartphone to visualize a 3D house design. The floorplan image captured by the smartphone camera is designated as a marker and then sent to the server. The server-side application, built using deep learning and integer programming techniques, detects corner positions on the image and produces a vector containing 2D coordinates. The client application on the smartphone uses the 2D coordinates to draw a 3D house model using Unity 3D. The model is then added over the floor plan image marker using Vuforia. Based on the test results, the 3D house models can be drawn according to the provided floor plan with moderate accuracy. The augmented reality application offers an alternative approach to examining a floor plan so that a user can better understand and engage with the design.
+As augmented reality technologies develop, real-time interactions between objects present in the real world and virtual space. Smartphones currently support the augmented reality feature, capable of displaying virtual objects into the real-world environment. In this proposed research work we are developing an augmented reality application on a smartphone to visualize a 3D house design. Here an augmented reality (AR) approach is used to convert 2D images into 3D model. Here we are capturing the image and sending it to server. On server side application, 3D model is build using image processing techniques … and Blender API. On client side using Unity 3D application which resides on the smartphone will convert 3D blender model to 3D AR model. At the end application will render 3D model on users smartphone.
 
 
 \section{\uppercase{\large{Background and Literature Survey}}}
 The system flow is that the user first places a floorplan that will be presented in front of the smartphone’s camera. The camera then takes a floorplan image, which is then examined whether it is suitable as a marker or not. If the image is appropriate, then it is sent to the server. Otherwise, the client application will ask the user to take a more suitable image. The image should be clear with an upright position and contains enough features. Small tolerance in scaling and rotation is allowable. The algorithm was used to create an augmented reality marker.
 
-After receiving the client’s image, the server runs the image recognition algorithm and prepares a tracking system. We adopt the learning-based approach to convert the raster plan image into a computer-readable vector representation. Then, the server sends the results of the recognition algorithm and tracking system to the client. The algorithm is used on the server side. After receiving the required information, the client draws a 3D model using the received coordinate points.\\
-Steps - \\
-a) Augmented reality marker\\
-b) Floorplan recognition\\
-c) 3D model building\\
-d) Floorplan visualization\\
+After receiving the client’s image, the server runs the image recognition algorithm and prepares a tracking system. We adopt the learning-based approach to convert the raster plan image into a computer-readable vector representation. Then, the server sends the results of the recognition algorithm and tracking system to the client. The algorithm is used on the server side. After receiving the required information, the client draws a 3D model using the received coordinate points.\\\\
+Steps -
+\begin{enumerate}
+  \item Augmented reality marker.
+  \item Floorplan recognition.
+  \item 3D model building
+  \item Floorplan visualization
+\end{enumerate}
 
 \section{\uppercase{\large{Problem Statement/Definition.}}}
 
 \section{\uppercase{\large{Software Requirement Specification (In SRS Documentation only).}}}
+\subsection{Software Requirements}
+\begin{itemize}
+    \item AR software works in conjunction with devices such as tablets, phones, headsets, and more. These integrating devices contain sensors and digital projectors, and hence require
+    \item Appropriate software that enables computer-generated objects to be projected into the real world.
+    \item On-board operating system and user interface to support the software
+    \item Web Browser
+    \item Authoring to allow the user to use API links to other databases and websites to display information.
+    \item AR for Android requires Android 7.0 or later and access to the Google Play Store.
+    \item AR iOS is compatible with all ARKit compatible devices running on iOS11 or later from iPhone SE (1st generation) to later and iPad (2017)
+\end{itemize}
+
+\subsection{Hardware Requirements}
+\begin{itemize}
+	\item Battery life
+	\item Bluetooth connectivity/Wi-Fi
+	\item field of view 3D view
+	\item Onboard storage capacity
+	\item Onboard OS/Web Browser
+	\item Inputs/Outputs (button, eye tracking, accelerometer)
+	\item Microphone
+	\item Sound Capacity
+	\item Display Capacity
+	\item Visual Tracking
+\end{itemize}
 
 \section{\uppercase{\large{Flowchart}}}
+
+\includegraphics{universe}
+
 
 \section{\uppercase{\large{Project Requirement specification.}}}
 
@@ -52,6 +106,51 @@ d) Floorplan visualization\\
 \section{\uppercase{\large{High level design of the project (DFD,UML, ER Diagrams).}}}
 
 \section{\uppercase{\large{System implementation-code documentation: Algorithm style, Description of detailed methodologies,  protocols used etc..as applicable.}}}
+\begin{lstlisting}
+// C++ program to implement recursive Binary Search
+#include <iostream>
+using namespace std;
+
+// A recursive binary search function. It returns
+// location of x in given array arr[l..r] is present,
+// otherwise -1
+int binarySearch(int arr[], int l, int r, int x)
+{
+	if (r >= l) {
+		int mid = l + (r - l) / 2;
+
+		// If the element is present at the middle
+		// itself
+		if (arr[mid] == x)
+			return mid;
+
+		// If element is smaller than mid, then
+		// it can only be present in left subarray
+		if (arr[mid] > x)
+			return binarySearch(arr, l, mid - 1, x);
+
+		// Else the element can only be present
+		// in right subarray
+		return binarySearch(arr, mid + 1, r, x);
+	}
+
+	// We reach here when element is not
+	// present in array
+	return -1;
+}
+
+int main(void)
+{
+	int arr[] = { 2, 3, 4, 10, 40 };
+	int x = 10;
+	int n = sizeof(arr) / sizeof(arr[0]);
+	int result = binarySearch(arr, 0, n - 1, x);
+	(result == -1)
+		? cout << "Element is not present in array"
+		: cout << "Element is present at index " << result;
+	return 0;
+}
+\end{lstlisting}
 
 \section{\uppercase{\large{Test cases.}}}
 
